@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Leaderboard - Aakaar{% endblock %}
+
+{% block styles %}
+<style>
+    :root {
+        --rank-1-bg: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(218, 165, 32, 0.05));
+        --rank-2-bg: linear-gradient(135deg, rgba(192, 192, 192, 0.15), rgba(169, 169, 169, 0.05));
+        --rank-3-bg: linear-gradient(135deg, rgba(205, 127, 50, 0.2), rgba(165, 80, 25, 0.1));
+        --gold-color: #ffd700;
+        --silver-color: #040303;
+        --bronze-color: #cd7f32;
+    }
+
+    .leaderboard-container {
+        padding-top: 120px;
+        padding-bottom: 50px;
+    }
+
+    .leaderboard-title {
+        font-family: var(--font-family-heading);
+        font-weight: 700;
+        font-size: 3rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #ffffff;
+        text-shadow: 0 0 20px rgb(204 72 117), 0 0 10px rgba(231, 69, 19, 0.84);
+    }
+
+    .leaderboard-card {
+        background: var(--card-background);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: var(--shadow-xl);
+    }
+
+    .table {
+        border-collapse: separate;
+        border-spacing: 0 8px;
+        margin-bottom: 0;
+    }
+
+    .table thead th {
+        color: #000000;
+        font-family: var(--font-family-heading);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border: none;
+        padding: 1rem 1.5rem;
+    }
+
+    .table tbody tr {
+        background: var(--surface-elevated);
+        border-radius: 12px;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        border-left: 5px solid transparent;
+    }
+
+    .table tbody tr:hover {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: var(--shadow-glow);
+    }
+
+    .table tbody td {
+        color: #000000;
+        font-family: var(--font-family-primary);
+        vertical-align: middle;
+        padding: 1.5rem;
+        border: none;
+        border-top: 1px solid var(--border-light);
+    }
+
+    .table tbody tr td:first-child {
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
+    }
+    
+    .table tbody tr td:last-child {
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+
+    .rank-number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-color-strong);
+        min-width: 60px;
+        text-align: center;
+    }
+
+    .user-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .user-college {
+        font-size: 0.9rem;
+        color:#000000;
+    }
+
+    .user-points {
+        font-size: 1.5rem;
+        font-weight: 800;
+        text-align: right;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .rank-1, .rank-2, .rank-3 {
+        border-left-width: 5px;
+        border-left-style: solid;
+    }
+    
+    .rank-1 { background: var(--rank-1-bg); border-left-color: var(--gold-color); }
+    .rank-2 { background: var(--rank-2-bg); border-left-color: var(--silver-color); }
+    .rank-3 { background: var(--rank-3-bg); border-left-color: var(--bronze-color); }
+
+    .rank-1 td,
+    .rank-2 td,
+    .rank-3 td,
+    .rank-1 .user-college,
+    .rank-2 .user-college,
+    .rank-3 .user-college {
+        color: #000000 !important;
+    }
+
+    .rank-1 .user-points,
+    .rank-2 .user-points,
+    .rank-3 .user-points {
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        -webkit-text-fill-color: unset !important;
+        background-clip: unset !important;
+        color: #000000 !important;
+        font-weight: 700;
+    }
+    
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container leaderboard-container">
+    <h1 class="leaderboard-title">CR Leaderboard</h1>
+
+    <div class="leaderboard-card">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">Rank</th>
+                        <th scope="col">Participant</th>
+                        <th scope="col" class="text-end">Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in leaderboard_data %}
+                    <tr class="rank-{{ forloop.counter }}">
+                        <td class="rank-number">
+                            {{ forloop.counter }}
+                        </td>
+                        <td>
+                            <div class="user-name">{{ data.name }}</div>
+                            <div class="user-college">{{ data.college }}</div>
+                        </td>
+                        <td class="user-points">
+                            {{ data.score }}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center text-muted py-5">
+                            The leaderboard is currently empty.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

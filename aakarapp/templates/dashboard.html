@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}CR Dashboard - Aakaar{% endblock %}
+
+{% block styles %}
+<style>
+    body {
+        background: var(--gradient-hero);
+        color: var(--text-color);
+    }
+    .dashboard-container {
+        padding-top: 100px;
+        padding-bottom: 50px;
+        font-family: var(--font-family-primary);
+    }
+    .profile-header {
+        background: var(--card-background);
+        padding: 3rem;
+        border-radius: 20px;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-xl);
+        position: relative;
+        overflow: hidden;
+    }
+    .profile-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--gradient-primary);
+    }
+    .profile-header h2 {
+        font-weight: 700;
+        font-family: var(--font-family-heading);
+        font-size: 2.5rem;
+    }
+    .stat-card {
+        background: var(--surface-elevated);
+        padding: 2rem;
+        border-radius: 16px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-xl);
+    }
+    .stat-card .stat-title {
+        font-size: 1rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 1rem;
+    }
+    .stat-card .stat-value {
+        font-size: 3.5rem;
+        font-weight: 800;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .history-table {
+        background: var(--card-background);
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: var(--shadow-lg);
+    }
+    .history-table h3 {
+        font-family: var(--font-family-heading);
+        font-size: 1.75rem;
+    }
+    .table thead th {
+        border-bottom-width: 2px;
+        background: var(--surface-elevated);
+    }
+    .table td, .table th {
+        vertical-align: middle;
+        padding: 1.25rem 1rem;
+    }
+    .table tbody tr:hover {
+        background: var(--surface-elevated);
+    }
+    .badge {
+        font-size: 0.875rem;
+        padding: 0.6rem 1.2rem;
+        border-radius: 20px;
+    }
+    .modal-content {
+        background: var(--card-background);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+    }
+    .form-control {
+        background: var(--surface-elevated);
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+    }
+    .form-control:focus {
+        background: var(--surface-elevated);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        color: var(--text-color);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container dashboard-container">
+    
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <div class="profile-header">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="mb-2">Welcome back, {{ user.first_name }}! 👋</h2>
+                        <p class="text-muted">CR ID: {{ CRID }} | {{ current_obj.colgName }}</p>
+                    </div>
+                    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#updateProfileModal">
+                            <i class="bi bi-pencil-square me-2"></i>Edit Profile
+                        </button>
+                    </div>
+                </div>
+                <hr>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <div class="stat-card">
+                            <div class="stat-title">Your Rank</div>
+                            <div class="stat-value">#{{ rank }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="stat-card">
+                            <div class="stat-title">Your Points</div>
+                            <div class="stat-value">{{ points }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="history-table">
+                <h3>Tasks Done By You</h3>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Task Name</th>
+                                <th scope="col">Status</th>
+                                <th scope="col" class="text-end">Points Awarded</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for submission in completed_tasks %}
+                            <tr>
+                                <td>
+                                    <div>
+                                        <strong>{{ submission.task.title }}</strong>
+                                        <div class="text-muted small mt-1">
+                                            <i class="bi bi-calendar3 me-1"></i>Submitted: {{ submission.submitted_at|date:"d M Y" }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if submission.graded %}
+                                    <span class="badge bg-success-subtle text-success-emphasis rounded-pill">
+                                        <i class="bi bi-check-circle me-1"></i>Graded
+                                    </span>
+                                    {% else %}
+                                    <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill">
+                                        <i class="bi bi-clock me-1"></i>Pending Review
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end">
+                                    <strong style="font-size: 1.1rem;">{{ submission.marks }}</strong>
+                                    <small class="text-muted d-block">points</small>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3" class="text-center text-muted py-4">
+                                   <i class="bi bi-inbox display-4 d-block mb-3 text-dark"></i>
+
+                                    <p class="mb-0 text-dark">You haven't submitted any tasks yet.</p>
+                                    <small class="text-dark">Start completing tasks to see your progress here!</small>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="updateProfileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="bi bi-person-gear me-2"></i>Update Your Profile
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'updateProfile' %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-control" name="names" value="{{ current_obj.names }}" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">College Name</label>
+              <input type="text" class="form-control" name="colName" value="{{ current_obj.colgName }}" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">State</label>
+              <input type="text" class="form-control" name="state" value="{{ current_obj.state }}" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Phone No.</label>
+              <input type="tel" class="form-control" name="phoneNo" value="{{ current_obj.mobileNo }}" pattern="[0-9]{10}" required>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">
+            <i class="bi bi-check-lg me-2"></i>Save Changes
+          </button>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

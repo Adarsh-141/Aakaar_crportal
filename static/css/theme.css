@@ -1,0 +1,422 @@
+/* Import Google Fonts and Bootstrap Icons */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+
+:root {
+    /* Enhanced Color Palette */
+    --background-color: #0a0e1a;
+    --background-secondary: #111827;
+    --card-background: #241a3e;
+    --card-background-hover: #374151;
+    
+    /* Primary Colors */
+    --primary-color: #7701c0;
+    --primary-hover: #e7e7e7;
+    --primary-light: #ffffff;
+    --secondary-color: #ed4d4d;
+    --secondary-hover: #00cdff;
+    
+    /* Accent Colors */
+    --accent-purple: #8b5cf6;
+    --accent-pink: #ec4899;
+    --accent-orange: #f59e0b;
+    --accent-green: #10b981;
+    
+    /* Text Colors */
+    --text-color: #ffffff;
+    --text-color-strong: #ffffff;
+    --text-muted-color: #ffffff;
+    --text-dark-muted: #6b7280;
+    
+    /* Border and Surface */
+    --border-color: #374151;
+    --border-light: #4b5563;
+    --surface-elevated: #8098ec;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, #e75f5f 100%);
+    --gradient-accent: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+    --gradient-hero: linear-gradient(135deg, #0a0e1a 0%, #1f2937 50%, #0a0e1a 100%);
+    
+    /* Typography */
+    --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-family-heading: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+/* Base Styles */
+body {
+    /* background: linear-gradient(to right, #86d3ff, #86c2ff, #86b1ff, #86a0ff, #868fff); */
+    /* background-image: url('CR.png');
+  /* background-attachment: fixed;  */
+    /* width: 100%;                     Ensures body takes full width */
+    height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full viewport width */
+    background-color: #161733;
+    background-size: cover; /* Scale to cover entire screen */
+    background-attachment: fixed;
+    background-position: center; /* Center the image */
+    color: var(--text-color);
+    font-family: var(--font-family-primary);
+    padding-top: 80px; /* Space for fixed navbar */
+    margin: 0; /* Remove default margin */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color-strong);
+    font-family: var(--font-family-heading);
+    font-weight: 600;
+}
+
+.text-muted {
+    color: var(--text-muted-color) !important;
+}
+
+.text-strong {
+    color: var(--text-color-strong) !important;
+    font-weight: 600;
+}
+
+/* Navigation */
+.navbar.bg-black {
+    background: rgba(10, 14, 26, 0.95) !important;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-nav .nav-link {
+    color: var(--text-color) !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--text-color-strong) !important;
+    background: rgba(99, 102, 241, 0.1);
+}
+
+/* Buttons */
+.btn {
+    font-weight: 500;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl), var(--shadow-glow);
+    color: white;
+}
+
+/* Cards */
+.card {
+    background: #402b59;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-color);
+}
+
+/* Modal */
+.modal-content {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-color);
+}
+
+.modal-title {
+    color: var(--text-color-strong);
+    font-family: var(--font-family-heading);
+}
+
+/* Forms */
+.form-control {
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    padding: 0.75rem 1rem;
+}
+
+.form-control:focus {
+    background: var(--surface-elevated);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    color: var(--text-color);
+}
+
+.form-label {
+    color: var(--text-color-strong);
+    font-weight: 500;
+}
+
+/* Section Styles */
+section {
+    padding: 100px 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-title h2 {
+    font-weight: 700;
+    font-size: 3rem;
+    
+    /* NEW: White color and Yellow Glow */
+    color: #ffffff;
+    text-shadow: 0 0 20px rgb(204 72 117), 0 0 10px rgba(231, 69, 19, 0.84);
+    display: inline-block;
+    padding-bottom: 1rem;
+    position:Â relative;
+}
+
+.section-title h2::after {
+    content: '';
+    /* position: absolute; */
+    bottom: 0;
+    left: 50%;
+    width: 60px;
+    height: 4px;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+    transform: translateX(-50%);
+}
+
+/* Hero Section Specifics */
+.hero-section {
+    padding: 70px 0;
+}
+
+.brand-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Feature & Incentive Cards */
+.feature-card, .incentive-box {
+    background: #402b59;
+    border: 1px solid var(--border-color);
+    padding: 2.5rem;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover, .incentive-box:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-xl);
+}
+
+.feature-icon {
+    font-size: 2rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 12px;
+    background: var(--gradient-primary);
+    color: white;
+    margin-bottom: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.incentive-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 2rem;
+}
+
+.incentive-box .icon {
+    font-size: 2rem;
+    color: #ff9ced;
+    margin-right: 1.5rem;
+}
+
+/* FAQ Accordion */
+.accordion-item {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+
+
+}
+
+.accordion-button {
+    background: #402b59;
+    color: var(--text-color-strong);
+}
+
+.accordion-button:not(.collapsed) {
+    background: var(--surface-elevated);
+    color: var(--primary-color);
+    box-shadow: none;
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.accordion-body {
+    border-top: 1px solid var(--border-color);
+}
+
+/* ============================================= */
+/* NEW: LIGHT THEME TASK CARD STYLES       */
+/* ============================================= */
+
+.task-card-new {
+    background-color: #ffffff; /* Clean white background */
+    border: 1px solid #006ad5; /* Light grey border */
+    border-left: 5px solid var(--primary-color); /* Themed accent */
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+}
+
+.task-card-new:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    border-color: var(--primary-color);
+}
+
+/* --- Card Header Section --- */
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #16314c;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* --- FIX: Font Visibility --- */
+.task-title {
+    font-size: 1.7rem;
+    font-family: var(--font-family-heading);
+    color: #212529; /* Dark, readable color for title */
+    margin: 0;
+}
+
+.task-description {
+    color: #495057; /* Slightly lighter dark color for body */
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* --- Meta Pills (Points/Deadline) --- */
+.task-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 0.95rem;
+    font-weight: 500;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.task-points {
+    color: #0f5132; /* Dark green text */
+    background-color: #d1e7dd; /* Light green background */
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+.task-deadline {
+    color: #664d03; /* Dark orange/yellow text */
+    background-color: #fff3cd; /* Light orange/yellow background */
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+/* --- Body & Footer --- */
+.task-body {
+    flex-grow: 1;
+    color: #000000;
+}
+
+.task-footer {
+    margin-top: 1.5rem;
+    
+}
+
+.task-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.task-button.submit {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.task-button.submit:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl), var(--shadow-glow);
+}
+
+.task-button.completed {
+    background-color: #e9ecef; /* Light grey for completed */
+    color: #6c757d; /* Muted text for completed */
+    cursor: not-allowed;
+}
+.glass-card {
+    background: rgb(12 5 45 / 79%); /* semi-transparent */
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* subtle border */
+    backdrop-filter: blur(10px); /* glass blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    box-shadow: 0 8px 32px rgb(186 47 47 / 20%);
+    transition: transform 0.3s ease, opacity 0.6s ease;
+    max-width: 280px;   /* makes card small */
+    padding: 20px;      /* reduce padding */
+    margin: auto;       /* center align */
+    text-align: center;
+}
+.glass-card:hover {
+    transform: translateY(-5px) scale(1.02);
+}
